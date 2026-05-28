@@ -1,1 +1,30 @@
-.idea
+# Build output — all modules
+**/target/
+
+# Maven
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+
+# Vault
+vault-keys.json
+*.vault-token
+
+# Kubernetes
+kubeconfig*
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.class
+
+# OS
+.DS_Store
+Thumbs.db
