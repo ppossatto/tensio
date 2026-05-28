@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package tensio.transformer;
+
+option java_package = "com.ppossatto.tensio.grpc.transformer";
+option java_outer_classname = "TransformerProto";
+option java_multiple_files = true;
+
+// ---------------------------------------------------------------
+// Messages
+// ---------------------------------------------------------------
+
+message TransformerId {
+  string id = 1;
+}
+
+message TransformerRequest {
+  string serial_number  = 1;
+  string name           = 2;
+  string manufacturer   = 3;
+  double latitude       = 4;
+  double longitude      = 5;
+  double rated_power_kva = 6;
+}
+
+message TransformerResponse {
+  string id             = 1;
+  string serial_number  = 2;
+  string name           = 3;
+  string manufacturer   = 4;
+  double latitude       = 5;
+  double longitude      = 6;
+  double rated_power_kva = 7;
+}
+
+message TransformerListResponse {
+  repeated TransformerResponse transformers = 1;
+}
+
+message DeleteResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// ---------------------------------------------------------------
+// Service
+// ---------------------------------------------------------------
+
+service TransformerService {
+  rpc CreateTransformer (TransformerRequest)     returns (TransformerResponse);
+  rpc GetTransformer    (TransformerId)          returns (TransformerResponse);
+  rpc UpdateTransformer (TransformerRequest)     returns (TransformerResponse);
+  rpc DeleteTransformer (TransformerId)          returns (DeleteResponse);
+  rpc ListTransformers  (ListTransformersRequest) returns (TransformerListResponse);
+}
+
+message ListTransformersRequest {
+  int32 page = 1;
+  int32 size = 2;
+}

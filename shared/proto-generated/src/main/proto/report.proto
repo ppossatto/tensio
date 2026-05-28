@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package tensio.report;
+
+option java_package = "com.ppossatto.tensio.grpc.report";
+option java_outer_classname = "ReportProto";
+option java_multiple_files = true;
+
+// ---------------------------------------------------------------
+// Messages
+// ---------------------------------------------------------------
+
+message ReportRequest {
+  string transformer_id = 1;
+  string start_date     = 2;  // ISO-8601: yyyy-MM-dd
+  string end_date       = 3;  // ISO-8601: yyyy-MM-dd
+  ReportFormat format   = 4;
+}
+
+message ReportResponse {
+  string report_id      = 1;
+  string transformer_id = 2;
+  bytes  content        = 3;  // PDF binary content
+  string generated_at   = 4;  // ISO-8601 datetime
+  ReportFormat format   = 5;
+}
+
+message ReportStatusRequest {
+  string report_id = 1;
+}
+
+message ReportStatusResponse {
+  string report_id  = 1;
+  ReportStatus status = 2;
+  string message    = 3;
+}
+
+enum ReportFormat {
+  PDF  = 0;
+  CSV  = 1;
+}
+
+enum ReportStatus {
+  PENDING    = 0;
+  PROCESSING = 1;
+  COMPLETED  = 2;
+  FAILED     = 3;
+}
+
+// ---------------------------------------------------------------
+// Service
+// ---------------------------------------------------------------
+
+service ReportService {
+  rpc GenerateReport   (ReportRequest)       returns (ReportResponse);
+  rpc GetReportStatus  (ReportStatusRequest) returns (ReportStatusResponse);
+}
