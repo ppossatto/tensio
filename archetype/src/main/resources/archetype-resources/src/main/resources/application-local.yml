@@ -1,0 +1,5 @@
+# Local development overrides
+# This file is active when running with -Dspring.profiles.active=local
+spring:
+  application:
+    name: ${serviceName}-local
